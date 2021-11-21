@@ -1,36 +1,43 @@
 package com.killeen.song;
 
-class Song {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-	private String song = "There was an old lady who swallowed a fly.\n"
-			+ "I don't know why she swallowed a fly - perhaps she'll die!\n" + "\n"
-			+ "There was an old lady who swallowed a spider;\n" + "That wriggled and wiggled and tickled inside her.\n"
-			+ "She swallowed the spider to catch the fly;\n"
-			+ "I don't know why she swallowed a fly - perhaps she'll die!\n" + "\n"
-			+ "There was an old lady who swallowed a bird;\n" + "How absurd to swallow a bird.\n"
-			+ "She swallowed the bird to catch the spider,\n" + "She swallowed the spider to catch the fly;\n"
-			+ "I don't know why she swallowed a fly - perhaps she'll die!\n" + "\n"
-			+ "There was an old lady who swallowed a cat;\n" + "Fancy that to swallow a cat!\n"
-			+ "She swallowed the cat to catch the bird,\n" + "She swallowed the bird to catch the spider,\n"
-			+ "She swallowed the spider to catch the fly;\n"
-			+ "I don't know why she swallowed a fly - perhaps she'll die!\n" + "\n"
-			+ "There was an old lady who swallowed a dog;\n" + "What a hog, to swallow a dog!\n"
-			+ "She swallowed the dog to catch the cat,\n" + "She swallowed the cat to catch the bird,\n"
-			+ "She swallowed the bird to catch the spider,\n" + "She swallowed the spider to catch the fly;\n"
-			+ "I don't know why she swallowed a fly - perhaps she'll die!\n" + "\n"
-			+ "There was an old lady who swallowed a cow;\n" + "I don't know how she swallowed a cow!\n"
-			+ "She swallowed the cow to catch the dog,\n" + "She swallowed the dog to catch the cat,\n"
-			+ "She swallowed the cat to catch the bird,\n" + "She swallowed the bird to catch the spider,\n"
-			+ "She swallowed the spider to catch the fly;\n"
-			+ "I don't know why she swallowed a fly - perhaps she'll die!\n" + "\n"
-			+ "There was an old lady who swallowed a horse...\n" + "...She's dead, of course!";
+public class Song {
 
-	public static void main(String[] args) {
+    private final static List<AnimalVerse> ANIMAL_VERSES = new ArrayList<>(Arrays.asList(
+            new AnimalVerse("fly", "There was an old lady who swallowed a fly.\n", false, true),
+            new AnimalVerse("spider", "There was an old lady who swallowed a spider;\nThat wriggled and wiggled and tickled inside her.\n", true, true),
+            new AnimalVerse("bird", "There was an old lady who swallowed a bird;\nHow absurd to swallow a bird.\n", true, true),
+            new AnimalVerse("cat", "There was an old lady who swallowed a cat;\nFancy that to swallow a cat!\n", true, true),
+            new AnimalVerse("dog", "There was an old lady who swallowed a dog;\nWhat a hog, to swallow a dog!\n", true, true),
+            new AnimalVerse("cow", "There was an old lady who swallowed a cow;\nI don't know how she swallowed a cow!\n", true, true),
+            new AnimalVerse("horse", "There was an old lady who swallowed a horse...\n...She's dead, of course!", false, false)));
 
-		System.out.println(new Song().getSong());
-	}
 
-	public String getSong() {
-		return this.song;
-	}
+
+    public static List<AnimalVerse> getAnimals() {
+        return ANIMAL_VERSES;
+    }
+
+    public String construct() {
+
+        StringBuilder finalSong = new StringBuilder();
+        List<AnimalVerse> previousVerses = new ArrayList<>();
+
+        ANIMAL_VERSES.forEach(next->{
+            previousVerses.add(next);
+            finalSong.append(next.construct(previousVerses));
+        });
+
+        return finalSong.toString();
+    }
+
+    public static void main(String[] args) {
+        Song song = new Song();
+        System.out.println(song.construct());
+    }
+
+
 }

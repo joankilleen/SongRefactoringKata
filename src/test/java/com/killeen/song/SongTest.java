@@ -25,14 +25,9 @@ public class SongTest {
 		return song1;
 	}
 
-	@Test
-	public void testSong(){
-		String song = new Song().getSong().replaceAll("\\s","");
-		assertEquals(correctSong, song);
-	}
     @Test
 	public void testDynamicSong(){
-		String song = new DynamicSong().construct().replaceAll("\\s","");
+		String song = new Song().construct().replaceAll("\\s","");
 		assertEquals(correctSong, song);
 	}
 
