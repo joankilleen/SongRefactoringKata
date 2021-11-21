@@ -20,51 +20,22 @@ public class DynamicSong {
     private static final String ANIMAL_N = "ANIMAL_N";
     private static final String ANIMAL_N_1 = "ANIMAL_N_1";
 
-    private static final String REPEATING_LINE = new  StringBuilder ("She swallowed the ")
-            .append(ANIMAL_N)
-            .append(" to catch the ")
-            .append(ANIMAL_N_1).toString();
-    private static final String FINAL_LINE_VERSE = "I don't know why she swallowed a fly - perhaps she'll die!\n";
+
 
     public static List<AnimalVerse> getAnimals() {
         return ANIMAL_VERSES;
     }
 
     public String construct() {
-        List<String> verses = new ArrayList<>();
-        for (int i = 0; i < ANIMAL_VERSES.size(); i++) {
-            verses.add(constructVerse(i));
-        }
 
         StringBuilder finalSong = new StringBuilder();
-        verses.forEach(v -> finalSong.append(v));
+        List<AnimalVerse> previousVerses = new ArrayList<>();
+        for (int i = 0; i < ANIMAL_VERSES.size(); i++) {
+            AnimalVerse next = ANIMAL_VERSES.get(i);
+            previousVerses.add(next);
+            finalSong.append(next.construct(previousVerses));
+        }
         return finalSong.toString();
-    }
-
-    private String constructVerse(int i) {
-        AnimalVerse animalVerse_i = getAnimals().get(i);
-        Validate.notNull(animalVerse_i);
-        StringBuilder verse = new StringBuilder(animalVerse_i.getText());
-        if (animalVerse_i.includeRepeater()) {
-
-            //Repeating line
-            for (int n = i; n >= 1; n--) {
-                AnimalVerse text_n = getAnimals().get(n);
-                AnimalVerse text_n_minus_1 = getAnimals().get(n - 1);
-                Validate.notNull(text_n_minus_1);
-
-                verse.append(REPEATING_LINE.replace(ANIMAL_N_1, text_n_minus_1.getName()).replace(ANIMAL_N, text_n.getName()));
-                if (n == 1) {
-                    verse.append(";\n");
-                } else {
-                    verse.append(",\n");
-                }
-            }
-        }
-        if (animalVerse_i.includeLastLine()) {
-            verse.append(FINAL_LINE_VERSE);
-        }
-        return verse.append("\n").toString();
     }
 
     public static void main(String[] args) {
