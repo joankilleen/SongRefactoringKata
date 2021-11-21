@@ -22,7 +22,6 @@ public class AnimalVerse {
     private boolean includeRepeater;
     private boolean includeLastLine;
 
-
     public void setIncludeLastLine(boolean includeLastLine) {
         this.includeLastLine = includeLastLine;
     }
@@ -91,7 +90,6 @@ public class AnimalVerse {
 
         StringBuilder verse = new StringBuilder(text);
         if (this.includeRepeater ) {
-
             //Repeating line
             for (int n = listPreviousAnimalsIncludingMe.size()-1; n >= 1; n--) {
                 AnimalVerse text_n = listPreviousAnimalsIncludingMe.get(n);
